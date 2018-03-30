@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="drawKochCurveSVG.js"></script>
+</head>
+<body>
+<label>Koch curve<br>
+    <input  type="text" id="task" name="function">
+</label>
+<button
+        onclick="doTask()"  >Submit
+</button>
+<p id="points2"></p>
+
+<svg height="2000" width="2000" id="polygons1" style="display: none">
+    <polygon
+            points="0, 500 500, 500 750, 66 1000, 500 1500, 500"
+            style="fill:lime;stroke:purple;stroke-width:2;fill-rule:nonzero;"></polygon>
+</svg>
+<svg height="2000" width="2000" id="koch" >
+    <polygon
+            points=""
+            style="fill:lime;stroke:purple;stroke-width:2;fill-rule:nonzero;"></polygon>
+</svg>
+<!--points="0, 500 166, 500 250, 355 333, 500 500, 500 583, 355 500, 211 666, 211 750, 66 833, 211 1000, 211 916, 355 1000, 500 1166, 500 1250, 355 1333, 500"-->
+
+
+<p id="chosenTask"></p>
+<p id="information"></p>
+</body>
+<canvas id="canvas" height="500" width="1500" style="border:1px solid #d3d3d3; position: relative">
+    Your browser does not support the HTML5 canvas tag.
+</canvas>
+<p id="points"></p>
+</html>
