@@ -1,0 +1,18 @@
+#container {
+  width: 80%;
+  margin: auto;
+}
+
+#text_container {
+  padding: 12px;
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+#task {
+  width: 100%;
+}
+
+#canvas {
+  margin: auto;
+}
