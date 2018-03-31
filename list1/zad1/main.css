@@ -4,15 +4,15 @@
 }
 
 #text_container {
-  padding: 12px;
-  margin-bottom: 5px;
+  margin-bottom: 3em;
   width: 100%;
 }
 
 #task {
-  width: 100%;
+  width: 80%;
 }
 
 #canvas {
-  margin: auto;
+  margin: 2px auto;
+  border:1px solid #d3d3d3;
 }
