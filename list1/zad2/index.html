@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../zad1/main.css">
+    <link rel="stylesheet" href="koch.css">
+    <script src="../zad1/turtle.js" charset="utf-8"></script>
+    <script type="text/javascript" src="kochCurve.js">
+
+    </script>
+    <title></title>
+  </head>
+  <body>
+    <div id="container">
+
+      <div id="text_container">
+        <p>Type your command below (remember only one command at a time):</p>
+        <input type="text" id="task">
+      </div>
+
+      <div id="input_for_koch">
+        <p>Degree: </p>
+        <input type="text" id="koch_degree">
+        <button type="button" onclick="drawKoch()">Draw</button>
+      </div>
+
+      <canvas id="canvas" width="800" height="600">
+        Your browser does not support canvas element
+      </canvas>
+
+    </div><!-- container -->
+  </body>
+</html>

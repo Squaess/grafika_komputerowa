@@ -1,0 +1,7 @@
+#text_container {
+  display: none;
+}
+
+#input_for_koch input {
+  margin-bottom: 3em;
+}

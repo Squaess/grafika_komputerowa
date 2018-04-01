@@ -38,14 +38,15 @@ var command2 = {
   name: "FORWARD",
   task: function(range){
     console.log("jedziemy na przod " + range);
+    ctx.beginPath();
+    ctx.moveTo(rx(turtle.posX), ry(turtle.posY));
     let new_X = turtle.posX + range * rpixel * Math.cos(toRadians(turtle.angle));
     let new_Y = turtle.posY + range * rpixel * Math.sin(toRadians(turtle.angle));
+    console.log(turtle.angle);
     ctx.lineTo(rx(new_X), ry(new_Y));
     turtle.posX = new_X;
     turtle.posY = new_Y;
     ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(rx(new_X), ry(new_Y));
   }
 };
 
@@ -53,14 +54,14 @@ var command3 = {
   name: "BACKWARD",
   task: function(range){
     console.log("do tylu ziom" + range);
+    ctx.beginPath();
+    ctx.moveTo(rx(turtle.posX), ry(turtle.posY));
     let new_X = turtle.posX - range * rpixel * Math.cos(toRadians(turtle.angle));
     let new_Y = turtle.posY - range * rpixel * Math.sin(toRadians(turtle.angle));
     ctx.lineTo(rx(new_X), ry(new_Y));
     turtle.posX = new_X;
     turtle.posY = new_Y;
     ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(rx(new_X), ry(new_Y));
   }
 };
 
@@ -84,8 +85,8 @@ function load() {
 
   ctx.fillStyle = "#000000";
 
-  ctx.beginPath();
-  ctx.moveTo(rx(0), ry(0));
+//  ctx.beginPath();
+//  ctx.moveTo(rx(0), ry(0));
 
   // For getting input from user
   var input = document.getElementById('task');
@@ -121,12 +122,18 @@ function load() {
     }
   }
 
-
   function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
   }
 
+}
 
+function rangeToKart(range) {
+
+  let new_X = turtle.posX + range * rpixel * Math.cos(toRadians(turtle.angle));
+  let new_Y = turtle.posY + range * rpixel * Math.sin(toRadians(turtle.angle));
+
+  return [new_X, new_Y];
 }
 
 function rx (x) {
@@ -135,6 +142,14 @@ function rx (x) {
 
 function ry (y) {
     return ctx.canvas.height-(y-rminy)/(rmaxy-rminy)*(ctx.canvas.height);
+}
+
+function rrx(x) {
+  return x * (rmaxx-rminx) / ctx.canvas.width + rminx;
+}
+
+function rry(y) {
+  return (1 - y/ctx.canvas.height) * (rmaxy-rminy) + rminy;
 }
 
 function toRadians (angle) {
