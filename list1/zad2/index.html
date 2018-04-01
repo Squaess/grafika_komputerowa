@@ -19,9 +19,23 @@
       </div>
 
       <div id="input_for_koch">
-        <p>Degree: </p>
-        <input type="text" id="koch_degree">
-        <button type="button" onclick="drawKoch()">Draw</button>
+        <div class="row">
+
+
+          <div class="in_line">
+
+            <p>Degree: </p>
+            <input type="text" id="koch_degree">
+
+          </div>
+
+          <div class="in_line">
+            <p>Angle:</p>
+            <input type="text" id="koch_angle">
+          </div>
+
+        </div><!-- row -->
+        <button type="button" onclick="drawKoch()" class="button">Draw</button>
       </div>
 
       <canvas id="canvas" width="800" height="600">

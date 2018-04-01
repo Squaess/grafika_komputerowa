@@ -5,18 +5,21 @@ var backward = command3.task;
 
 function drawKoch(){
   var degree = document.getElementById('koch_degree').value;
+  var angle = document.getElementById('koch_angle').value;
+  angle = parseInt(angle, 10);
   degree = parseInt(degree, 10);
-  if (Number.isInteger(degree)) {
+  if (Number.isInteger(degree) && Number.isInteger(angle)) {
     console.log(degree);
-    startDrawing(degree);
+    startDrawing(degree, angle);
   } else {
     alert("Wrong input");
   }
 }
 
 
-function startDrawing(degree) {
-  drawKochCurve(-1.8, -1, 0, 700, degree, 1);
+function startDrawing(degree, angle) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawKochCurve(-1.8, -1, angle, 700, degree, 1);
 }
 
 function drawKochCurve(x0, y0, angle, range, degree, mode) {
