@@ -6,8 +6,12 @@
     <title>Koch in SVG</title>
   </head>
   <body>
+    <p>Degree: </p>
+    <input type="text" id="koch_degree">
+
+    <button type="button" onclick="showHide()" class="button">Draw</button>
     <svg onload="makeShape(evt)" xmlns="https://www.w3.org/2000/svg"
-    width="1000" height="1000">
+    width="1000" height="1000" id="obraz" style="display: none;">
 
     </svg>
   </body>

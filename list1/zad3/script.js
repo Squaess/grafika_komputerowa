@@ -1,6 +1,7 @@
 var svgns = "http://www.w3.org/2000/svg";
 var svg = document.getElementsByTagName('svg')[0];
-
+var eVT;
+var degree = 0;
 var drawLine = function(x1, y1, x2, y2, svg) {
   var shape = svgDocument.createElementNS(svgns, "line");
   shape.setAttributeNS(null, "x1", x1);
@@ -11,6 +12,23 @@ var drawLine = function(x1, y1, x2, y2, svg) {
   svg.appendChild(shape);
 }
 
+function showHide(){
+  var input = document.getElementById('koch_degree').value;
+  input = parseInt(input, 10);
+  degree = input;
+  if (Number.isInteger(degree)) {
+    var obraz = document.getElementById('obraz');
+    if(obraz.style.display === "none") {
+      obraz.style.display = "block";
+      makeShape(eVT);
+    } else {
+      makeShape(eVT);
+    }
+  } else {
+    alert("Wrong input");
+  }
+}
+
 function makeShape(evt) {
 
     var svg = document.getElementsByTagName('svg')[0];
@@ -18,7 +36,11 @@ function makeShape(evt) {
     if ( window.svgDocument == null )
         svgDocument = evt.target.ownerDocument;
 
-    drawKochCurve(20.0, 200.0, 400.0, 200.0, svg, 3, Math.PI/3);
+    eVT = evt;
+    while( svg.firstChild) {
+      svg.removeChild(svg.firstChild);
+    }
+    drawKochCurve(20.0, 600.0, 980.0, 600.0, svg, degree, Math.PI/3);
 }
 
 var drawKochCurve = function(x1, y1, x2, y2, svg, degree, alfa) {
