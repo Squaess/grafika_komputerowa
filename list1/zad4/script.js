@@ -1,10 +1,74 @@
+
 var ctx, rminx, rmaxx, rminy, rmaxy;
-var rpixel=0.005; // size of pixel
+var rpixel = 0.005; // size of pixel
 var perspective_points = [0, 4];
 var character_position = [-1.93, -1.1];
-character_height = 0.5;
-character_width = 0.3;
-character_depth = 0.2;
+var character_height = 0.5;
+var character_width = 0.4;
+var character_depth = 0.2;
+var character_details = new Array(3);
+character_details[0] = [character_position, character_width, character_height, character_depth];
+var depth_const = character_depth/character_position[0];
+var row_position = 0;
+
+document.addEventListener("keydown", keyDownTextField, false);
+
+function keyDownTextField(e) {
+  var keyCode = e.keyCode;
+  switch (keyCode) {
+    case 38: //up
+      console.log("up");
+      goUp();
+      break;
+    case 40://down
+      console.log("down");
+      goDown();
+      break;
+    default:
+  }
+}
+
+function goUp(){
+  row_position++;
+  if (row_position < 3) {
+
+    if(character_details[row_position] == null) {
+      var new_character_position = compute(character_position, character_depth);
+      var to_width_compute = compute([ character_position[0] + character_width, character_position[1]], character_depth);
+      var to_height_compute = computeY([character_position[0]+ character_width, character_position[1]+character_height], to_width_compute[0]);
+
+      character_position = new_character_position;
+      character_width = to_width_compute[0] - new_character_position[0];
+      character_height = to_height_compute[1] - new_character_position[1];
+      character_depth = depth_const * new_character_position[0];
+
+
+      console.log(character_width);
+      console.log("position " + character_position);
+      console.log("Width " + character_width);
+      console.log("Height " + character_height);
+      character_details[row_position] = [character_position, character_width, character_height, character_depth];
+    }
+  } else {
+    row_position = 2;
+  }
+
+}
+
+
+function goDown() {
+    row_position--;
+    if(row_position >= 0) {
+
+      character_position = character_details[row_position][0];
+      character_width = character_details[row_position][1];
+      character_height = character_details[row_position][2];
+      character_depth = character_details[row_position][3];
+
+    } else {
+      row_position = 0;
+    }
+}
 
 function myFunction(){
   setInterval(function(){
@@ -12,10 +76,6 @@ function myFunction(){
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.strokeStyle = "white";
     drawRect(character_position[0], character_position[1], character_width, character_height, character_depth);
-    character_position[1] += 0.01;
-    character_position[0] += 0.01;
-    character_depth -= 0.001;
-    character_height -= 0.001;
   }, 100);
 }
 
@@ -64,12 +124,11 @@ function drawRect(x0, y0, width, height, depth) {
       c = [x0 + width, y0 + height],
       d = [x0 + width, y0]];
 
-  var vertex1 = [
-      e = compute(a, depth),
-      f = compute(b, depth),
-      g = compute(c, depth),
-      h = compute(d, depth)
-    ]
+  var e = compute(a, depth),
+      f = computeY(b, e[0]),
+      h = compute(d, depth),
+      g = computeY(c, h[0]);
+  var vertex1 = [e, f, g, h];
 
   ctx.beginPath();
   ctx.moveTo(rx(a[0]), ry(a[1]));
@@ -104,6 +163,18 @@ function compute(points, depth){
   var b = points[1] - a * points[0];
   var x2 = (y2 - b) / a;
   return [x2, y2];
+}
+
+function computeY(points, x0) {
+  var x2 = x0;
+  var a  = (points[1]-perspective_points[1])/(points[0] - perspective_points[0]);
+  var b = points[1] - a * points[0];
+  var y2 = a * x0 + b;
+  return [x2, y2];
+}
+
+function backCompute(points, depth){
+
 }
 
 function rx (x) {
