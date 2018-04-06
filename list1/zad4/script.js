@@ -1,15 +1,16 @@
 
 var ctx, rminx, rmaxx, rminy, rmaxy;
 var rpixel = 0.005; // size of pixel
-var perspective_points = [0, 4];
+var perspective_points = [0, 2];
 var character_position = [-1.93, -1.1];
 var character_height = 0.5;
 var character_width = 0.4;
 var character_depth = 0.2;
-var character_details = new Array(3);
+var character_details = [];
 character_details[0] = [character_position, character_width, character_height, character_depth];
 var depth_const = character_depth/character_position[0];
 var row_position = 0;
+var objectsDetails = [[1, -1.1],0.4, 0.5, 0.2, 0.001];
 
 document.addEventListener("keydown", keyDownTextField, false);
 
@@ -30,6 +31,7 @@ function keyDownTextField(e) {
 
 function goUp(){
   row_position++;
+  console.log("row_position " + row_position);
   if (row_position < 3) {
 
     if(character_details[row_position] == null) {
@@ -48,13 +50,19 @@ function goUp(){
       console.log("Width " + character_width);
       console.log("Height " + character_height);
       character_details[row_position] = [character_position, character_width, character_height, character_depth];
+    } else {
+
+      character_position = character_details[row_position][0];
+      character_width = character_details[row_position][1];
+      character_height = character_details[row_position][2];
+      character_depth = character_details[row_position][3];
+
     }
   } else {
     row_position = 2;
   }
 
 }
-
 
 function goDown() {
     row_position--;
@@ -76,7 +84,34 @@ function myFunction(){
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.strokeStyle = "white";
     drawRect(character_position[0], character_position[1], character_width, character_height, character_depth);
-  }, 100);
+    drawObjects();
+    moveObjects();
+    chechObjects();
+  }, 11);
+}
+
+function drawObjects(){
+
+    drawRect(objectsDetails[0][0], objectsDetails[0][1], objectsDetails[1], objectsDetails[2], objectsDetails[3]);
+
+}
+
+function moveObjects(){
+  for(var i = 0; i < objectsDetails.length; i++){
+    objectsDetails[0][0] -= objectsDetails[4];
+  }
+}
+
+function chechObjects(){
+    if(objectsDetails[0][0] <= -2) {
+      var row = Math.floor(Math.random()*3);
+      objectsDetails[0][0] = 1;
+      objectsDetails[0][1] = character_details[row][0][1];
+      objectsDetails[1] = character_details[row][1];
+      objectsDetails[2] = character_details[row][2];
+      objectsDetails[3] = character_details[row][3];
+      objectsDetails[4] += 0.0001;
+    }
 }
 
 function run() {
@@ -96,7 +131,16 @@ function run() {
   rmaxy= rpixel*ctx.canvas.height/2;
 
   ctx.strokeStyle = "white";
-  //drawBoard();
+  initialize();
+
+}
+
+function initialize() {
+
+  goUp();
+  goUp();
+  goDown();
+  goDown();
 
 }
 
@@ -114,7 +158,6 @@ function drawBoard(){
   ctx.lineTo(rx(perspective_points[0]), ry(perspective_points[1]));
   ctx.stroke();
 }
-
 
 function drawRect(x0, y0, width, height, depth) {
 
@@ -171,10 +214,6 @@ function computeY(points, x0) {
   var b = points[1] - a * points[0];
   var y2 = a * x0 + b;
   return [x2, y2];
-}
-
-function backCompute(points, depth){
-
 }
 
 function rx (x) {
