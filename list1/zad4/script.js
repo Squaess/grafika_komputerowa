@@ -10,7 +10,10 @@ var character_details = [];
 character_details[0] = [character_position, character_width, character_height, character_depth];
 var depth_const = character_depth/character_position[0];
 var row_position = 0;
-var objectsDetails = [[1, -1.1],0.4, 0.5, 0.2, 0.001];
+var objectsDetails = [[1, -1.1],0.4, 0.5, 0.2, 0.002];
+var score = 0;
+
+var intervalId;
 
 document.addEventListener("keydown", keyDownTextField, false);
 
@@ -79,7 +82,7 @@ function goDown() {
 }
 
 function myFunction(){
-  setInterval(function(){
+  intervalId = setInterval(function(){
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.strokeStyle = "white";
@@ -87,6 +90,10 @@ function myFunction(){
     drawObjects();
     moveObjects();
     chechObjects();
+
+    ctx.fillStyle = "white";
+    ctx.font = "30px Arial";
+    ctx.fillText("Score: " + score,10,50);
   }, 11);
 }
 
@@ -111,6 +118,22 @@ function chechObjects(){
       objectsDetails[2] = character_details[row][2];
       objectsDetails[3] = character_details[row][3];
       objectsDetails[4] += 0.0001;
+      score++;
+    }
+
+    if(objectsDetails[0][1] === character_position[1]) {
+      if ( (character_position[0] + character_width) > objectsDetails[0][0]) {
+        alert("Colision\n" + "Your score: " + score);
+        clearInterval(intervalId);
+        var row = Math.floor(Math.random()*3);
+        objectsDetails[0][0] = 1;
+        objectsDetails[0][1] = character_details[row][0][1];
+        objectsDetails[1] = character_details[row][1];
+        objectsDetails[2] = character_details[row][2];
+        objectsDetails[3] = character_details[row][3];
+        objectsDetails[4] = 0.002;
+        score = 0;
+      }
     }
 }
 
