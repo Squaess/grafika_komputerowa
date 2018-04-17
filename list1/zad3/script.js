@@ -40,7 +40,7 @@ function makeShape(evt) {
     while( svg.firstChild) {
       svg.removeChild(svg.firstChild);
     }
-    drawKochCurve(20.0, 600.0, 980.0, 600.0, svg, degree, Math.PI/3);
+    drawKochCurve(20.0, 600.0, 980.0, 600.0, svg, degree, Math.PI/2);
 }
 
 var drawKochCurve = function(x1, y1, x2, y2, svg, degree, alfa) {
