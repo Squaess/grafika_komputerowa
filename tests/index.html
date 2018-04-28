@@ -3,8 +3,30 @@
   <head>
     <meta charset="utf-8">
     <title>svg</title>
+    <link rel="stylesheet" href="css/master.css">
   </head>
   <body>
+
+      <div id="myTopnav" class="topnav">
+          <span class="active">Home</span>
+          <span onclick="showSubList('edu')" class="subspan">Moja Edukacja</span>
+          <ul class="sublist" id="edu">
+              <li><a href="#">Liceum</a></li>
+              <li><a href="#">Semestr1</a></li>
+              <li><a href="#">Semestr2</a></li>
+              <li><a href="#">Semestr3</a></li>
+              <li><a href="#">Semestr4</a></li>
+          </ul>
+          <span onclick="showSubList('hobby')" class="subspan">Moje Hobby</span>
+          <ul class="sublist" id="hobby">
+              <li><a href="#">Muzyka</a></li>
+              <li><a href="#">E-sport</a></li>
+              <li><a href="#">Książki</a></li>
+          </ul>
+          <span class="icon" onclick="myFunction()">☰</span>
+      </div>
+
+
     <svg width="370" height="100">
         <circle cx="50" cy="50" r="40" fill="yellow" stroke="green"
           stroke-width="4"/>
@@ -13,6 +35,33 @@
             fill="blue" fill-opacity="0.2"
             stroke="green" stroke-width="4" />
     </svg>
+
+<script>
+function myFunction() {
+  "use strict";
+  var x = document.getElementById("myTopnav");
+  var d = x.childNodes.length;
+  console.log(d + " nice");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+    // sprawdzić czy podstrona nie jest otwarta
+  } else {
+    x.className = "topnav";
+    var ele = document.getElementsByClassName("sublist");
+    var i;
+    for (i = 0; i < ele.length; i++) {
+        ele[i].style.display = "none";
+    }
+  }
+}
+
+function showSubList(className) {
+    "use strict";
+    console.log(className);
+    var x = document.getElementById(className);
+    x.style.display = x.style.display === "block" ? "none":"block";
+}
+</script>
 
   </body>
 </html>
