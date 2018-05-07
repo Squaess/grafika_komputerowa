@@ -28,7 +28,7 @@ var gl; // A global variable for the WebGL context
 
 function start() {
 
-  var canvas = document.getElementById("glcanvas");
+  var canvas = document.getElementById("canvasId");
 
   gl = canvas.getContext("webgl");      // Initialize the GL context
 
@@ -96,7 +96,9 @@ function start() {
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(trianglevertices), gl.STATIC_DRAW);
 
   var positionAttribLocation = gl.getAttribLocation(program, 'vertPosition');
+  console.log(positionAttribLocation + "  LOOOL");
   var colorAttribLocation = gl.getAttribLocation(program, 'vertColor');
+  console.log(colorAttribLocation + " BLEHHH");
   gl.vertexAttribPointer(
     positionAttribLocation,
     2,
@@ -120,4 +122,30 @@ function start() {
 
   gl.useProgram(program);
   gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+  const numAttribs = gl.getProgramParameter(program, gl.ACTIVE_ATTRIBUTES);
+  for (let i = 0; i < numAttribs; ++i) {
+      const info = gl.getActiveAttrib(program, i);
+      console.log('name:', info.name, 'type:', info.type, 'size:', info.size);
+  }
 }
+
+var html;
+
+var htmlInit = function() {
+    html = {};
+    html.html  = document.querySelector('#htmlId');
+    html.canvas = document.querySelector('#canvasId');
+    html.divMessages = document.querySelector('#divMessages');
+}
+
+window.onload= function(){
+    htmlInit();
+    gl = html.canvas.getContext("experimental-webgl");
+    html.divMessages.innerHTML="<h3>Parameter values:</h3>\n";
+    html.divMessages.innerHTML+="<ul>\n";
+    html.divMessages.innerHTML+="<li>"+"MAX_VIEWPORT_DIMS"+" = "+JSON.stringify(gl.getParameter(gl.MAX_VIEWPORT_DIMS))+"</li>\n";
+
+/* … */
+   html.divMessages.innerHTML+="</ul>\n";
+};
