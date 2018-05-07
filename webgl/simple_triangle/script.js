@@ -148,4 +148,5 @@ window.onload= function(){
 
 /* … */
    html.divMessages.innerHTML+="</ul>\n";
+   start();
 };
