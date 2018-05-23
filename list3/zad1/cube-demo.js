@@ -107,16 +107,16 @@ var makeShaderProgram= function(gl){
     gl.shaderSource(vertexShader, vertexShaderSource);
     gl.compileShader(vertexShader);
     if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) {
-	console.log(gl.getShaderInfoLog(vertexShader));
-	return null;
+			console.log(gl.getShaderInfoLog(vertexShader));
+			return null;
     }
 
     fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
     gl.shaderSource(fragmentShader, fragmentShaderSource);
     gl.compileShader(fragmentShader);
     if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) {
-	console.log(gl.getShaderInfoLog(fragmentShader));
-	return null;
+			console.log(gl.getShaderInfoLog(fragmentShader));
+			return null;
     }
 
     shaderProgram = gl.createProgram();
@@ -124,8 +124,8 @@ var makeShaderProgram= function(gl){
     gl.attachShader(shaderProgram, fragmentShader);
     gl.linkProgram(shaderProgram);
     if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-	console.log("Could not initialise shaders");
-	return null;
+			console.log("Could not initialise shaders");
+			return null;
     }
 
     gl.useProgram(shaderProgram);
@@ -227,7 +227,8 @@ var loadTexture2DFromCanvas= function(gl, canvas, textureId){
     */
     // gl.activeTexture(gl.TEXTURE0+textureUnit);
     gl.bindTexture(gl.TEXTURE_2D, textureId);
-    gl.texImage2D( gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvas);
+		gl.texImage2D( gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, document.getElementById('crate-image') );
+    //gl.texImage2D( gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvas);
 };
 
 
@@ -497,9 +498,12 @@ window.onload= function(){
     sbx_makeShaderProgram(gl);
 
     var fun=sbx_fun;
-    var r=Math.floor( Math.random()* fun.length );
-    var g=Math.floor( Math.random()* fun.length );
-    var b=Math.floor( Math.random()* fun.length );
+		var r=Math.floor( 0.1* fun.length );
+    var g=Math.floor( 0.3* fun.length );
+    var b=Math.floor( 0.1* fun.length );
+    // var r=Math.floor( Math.random()* fun.length );
+    // var g=Math.floor( Math.random()* fun.length );
+    // var b=Math.floor( Math.random()* fun.length );
     for(var skyboxStep=0; skyboxStep<6; skyboxStep++ ){
 	     sbx_fillCanvasUpsideDown( canvasTex, sbx_createFunctionRGB( fun[r], fun[g], fun[b], skyboxXYZ[skyboxStep] ) );
 	     sbx_loadCubeFaceFromCanvas(gl, canvasTex, cubeFace[skyboxStep]);
