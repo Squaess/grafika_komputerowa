@@ -1,4 +1,4 @@
-
+var glob = [0, 0, 0, 0, 0, 0];
 var html=null;
 var gl=null;
 
@@ -217,7 +217,22 @@ var createTexture2D= function(gl){
     return textureId;
 }
 
-var loadTexture2DFromCanvas= function(gl, canvas, textureId){
+var createTexture2D_2= function(gl){
+    /* parameters:
+       gl -  WebGL contex
+       textureUnit - texture unit to which the texture should be bound
+    */
+    var textureId=gl.createTexture();
+    // gl.activeTexture(gl.TEXTURE0+textureUnit);
+    gl.bindTexture(gl.TEXTURE_2D, textureId);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    return textureId;
+}
+
+var loadTexture2DFromCanvas= function(gl, canvas, textureId, img){
     /* use after  makeShaderProgram(gl) */
     /* Parameters:
        gl - WebGL context
@@ -227,7 +242,8 @@ var loadTexture2DFromCanvas= function(gl, canvas, textureId){
     */
     // gl.activeTexture(gl.TEXTURE0+textureUnit);
     gl.bindTexture(gl.TEXTURE_2D, textureId);
-		gl.texImage2D( gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, document.getElementById('crate-image') );
+		gl.texImage2D( gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+		//gl.texImage2D( gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, document.getElementById('crate-image') );
     //gl.texImage2D( gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvas);
 };
 
@@ -417,30 +433,102 @@ function onKeyDown(e){
     {
     case 38: // up
     case 73: // I
-	rotationMatrix4=matrix4RotatedYZ(rotationMatrix4, alpha );
-	break;
+			rotationMatrix4=matrix4RotatedYZ(rotationMatrix4, alpha );
+			break;
     case 40: // down
     case 75: // K
-	rotationMatrix4=matrix4RotatedYZ(rotationMatrix4, -alpha );
-	break;
+			rotationMatrix4=matrix4RotatedYZ(rotationMatrix4, -alpha );
+			break;
     case 37: // left
     case 74:// J
-	rotationMatrix4=matrix4RotatedXZ(rotationMatrix4, -alpha );
-	break;
+			rotationMatrix4=matrix4RotatedXZ(rotationMatrix4, -alpha );
+			break;
     case 39:// right
     case 76: // L
-	rotationMatrix4=matrix4RotatedXZ(rotationMatrix4, alpha );
-	break;
+			rotationMatrix4=matrix4RotatedXZ(rotationMatrix4, alpha );
+			break;
     case 70: // F
-	moveVector[2]++;
-	break;
+			moveVector[2]++;
+			break;
     case 66: // B
     case 86: // V
-	moveVector[2]--;
-	break;
+			moveVector[2]--;
+			break;
     case 32: // space
-	rotationMatrix4= identityMatrix4;
-	break;
+			rotationMatrix4= identityMatrix4;
+			break;
+		case 49: // 1
+			console.log('1');
+			if (glob[0] == 0) {
+				boxFaceTextures[0] = createTexture2D_2(gl);
+				loadTexture2DFromCanvas(gl, canvasTex, boxFaceTextures[0], document.getElementById('crate-image0'));
+				glob[0] = 1;
+			} else {
+				boxFaceTextures[0] = createTexture2D(gl);
+				loadTexture2DFromCanvas(gl, canvasTex, boxFaceTextures[0], document.getElementById('crate-image0'));
+				glob[0] = 0;
+			}
+			break;
+		case 50: // 2
+			console.log('2');
+			if (glob[1] == 0) {
+				boxFaceTextures[1] = createTexture2D_2(gl);
+				loadTexture2DFromCanvas(gl, canvasTex, boxFaceTextures[1], document.getElementById('crate-image1'));
+				glob[1] = 1;
+			} else {
+				boxFaceTextures[1] = createTexture2D(gl);
+				loadTexture2DFromCanvas(gl, canvasTex, boxFaceTextures[1], document.getElementById('crate-image1'));
+				glob[1] = 0;
+			}
+			break;
+		case 51: // 3
+			console.log('3');
+			if (glob[2] == 0) {
+				boxFaceTextures[2] = createTexture2D_2(gl);
+				loadTexture2DFromCanvas(gl, canvasTex, boxFaceTextures[2], document.getElementById('crate-image2'));
+				glob[2] = 1;
+			} else {
+				boxFaceTextures[2] = createTexture2D(gl);
+				loadTexture2DFromCanvas(gl, canvasTex, boxFaceTextures[2], document.getElementById('crate-image2'));
+				glob[2] = 0;
+			}
+			break;
+		case 52: // 4
+			console.log('4');
+			if (glob[3] == 0) {
+				boxFaceTextures[3] = createTexture2D_2(gl);
+				loadTexture2DFromCanvas(gl, canvasTex, boxFaceTextures[3], document.getElementById('crate-image3'));
+				glob[3] = 1;
+			} else {
+				boxFaceTextures[3] = createTexture2D(gl);
+				loadTexture2DFromCanvas(gl, canvasTex, boxFaceTextures[3], document.getElementById('crate-image3'));
+				glob[3] = 0;
+			}
+			break;
+		case 53: // 5
+			console.log('5');
+			if (glob[4] == 0) {
+				boxFaceTextures[4] = createTexture2D_2(gl);
+				loadTexture2DFromCanvas(gl, canvasTex, boxFaceTextures[4], document.getElementById('crate-image4'));
+				glob[4] = 1;
+			} else {
+				boxFaceTextures[4] = createTexture2D(gl);
+				loadTexture2DFromCanvas(gl, canvasTex, boxFaceTextures[4], document.getElementById('crate-image4'));
+				glob[4] = 0;
+			}
+			break;
+		case 54: // 6
+			console.log('6');
+			if (glob[5] == 0) {
+				boxFaceTextures[5] = createTexture2D_2(gl);
+				loadTexture2DFromCanvas(gl, canvasTex, boxFaceTextures[5], document.getElementById('crate-image5'));
+				glob[5] = 1;
+			} else {
+				boxFaceTextures[5] = createTexture2D(gl);
+				loadTexture2DFromCanvas(gl, canvasTex, boxFaceTextures[5], document.getElementById('crate-image5'));
+				glob[5] = 0;
+			}
+			break;
 	/*
 	  case 77: // M
 	  case 82: // R
@@ -507,9 +595,14 @@ window.onload= function(){
     for(var skyboxStep=0; skyboxStep<6; skyboxStep++ ){
 	     sbx_fillCanvasUpsideDown( canvasTex, sbx_createFunctionRGB( fun[r], fun[g], fun[b], skyboxXYZ[skyboxStep] ) );
 	     sbx_loadCubeFaceFromCanvas(gl, canvasTex, cubeFace[skyboxStep]);
-	     boxFaceTextures.push( createTexture2D(gl) );
-	     loadTexture2DFromCanvas(gl, canvasTex, boxFaceTextures[boxFaceTextures.length-1]);
+			 boxFaceTextures.push( createTexture2D(gl) );
+ 			 loadTexture2DFromCanvas(gl, canvasTex, boxFaceTextures[boxFaceTextures.length-1], document.getElementById('crate-image' + skyboxStep));
     }
+
+		for (var i = 0; i < 6; i++){
+
+		}
+
 
     onWindowResize();
     window.onresize= onWindowResize;
